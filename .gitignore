@@ -13,3 +13,8 @@ docs/demo/*/palette.svg
 docs/superpowers/
 # demo PNGs are rebuilt by docs/demo/build.py; the README shows the standalone SVGs in docs/demo/preview/
 docs/demo/**/*.png
+# the project's own logo concepts: same build intermediates as the demos
+docs/brand/fonts/
+docs/brand/**/*.png
+docs/brand/concepts/*/board.svg
+docs/brand/concepts/all.svg

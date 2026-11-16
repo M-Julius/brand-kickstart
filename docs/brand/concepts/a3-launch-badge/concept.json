@@ -1,0 +1,21 @@
+{
+  "title": "Launch badge",
+  "why": "The @ in ink on a solid orange tile: the loudest avatar in a feed, still the same arrow in the name.",
+  "name": "brand-kickstart",
+  "tagline": "A name that is free everywhere. Then the logo.",
+  "display": {
+    "family": "Sora",
+    "weight": 700,
+    "tracking": -0.02
+  },
+  "text": {
+    "family": "Inter",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#101418",
+    "paper": "#f6f4ef",
+    "accent": "#ff6b35",
+    "support": "#3ddc97"
+  }
+}

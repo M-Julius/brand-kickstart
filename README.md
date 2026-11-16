@@ -1,6 +1,13 @@
 <div align="center">
 
-# brand-kickstart
+<img src="docs/brand/logo.svg" alt="" width="112">
+
+<h1>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/brand/wordmark-light.svg">
+  <img src="docs/brand/wordmark-dark.svg" alt="brand-kickstart" width="440">
+</picture>
+</h1>
 
 **From an idea to a launch-ready brand: a name that is free everywhere, then the logo and assets for it.**
 
@@ -128,6 +135,9 @@ $ brand.py board docs/demo/gallery
 
   ✓ 12 boards · logo at 128, 44 and 16 px · palette · type · illustration
 ```
+
+> [!NOTE]
+> Every logo, illustration and mockup on this page was drawn by **Claude Opus 5.5** running the skill. The agent writes the SVG itself, so the quality of the logos depends on the model you use: a smaller or older model follows the same rules but draws simpler, rougher marks.
 
 Every logo and illustration is drawn from scratch as SVG: no emoji, no icon fonts, no clip-art, no image model. It is rendered with [resvg](https://github.com/linebender/resvg) (`pip install resvg-py`, 2 MB), so no browser is needed. The full flow is in [`references/brand-kit.md`](skills/brand-kickstart/references/brand-kit.md). The images in this README are plain SVG, rebuilt from source with `python docs/demo/build.py`.
 
