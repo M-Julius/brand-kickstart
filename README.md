@@ -113,7 +113,7 @@ brand/
 
 ### Not one house style
 
-The agent picks from a menu in [`references/styles.md`](skills/brand-kickstart/references/styles.md), matched to the brief: 43 font pairings, 16 palettes, 8 mark types, 3 rendering styles (flat, 2.5D, 3D), text-based logos (wordmark, lettermark, combination) and 6 banner layouts. A 2.5D or 3D logo comes with a flat version for favicons, so it still reads at 16 px. A wordmark is drawn once and used wherever the name appears. Twelve made-up brands, twelve very different results (the gallery at the top of this page):
+The agent picks from a menu in [`references/styles.md`](skills/brand-kickstart/references/styles.md), matched to the brief: 43 font pairings, 16 palettes, 9 mark types, 3 rendering styles (flat, 2.5D, 3D), text-based logos (wordmark, lettermark, combination) and 6 banner layouts. A 2.5D or 3D logo comes with a flat version for favicons, so it still reads at 16 px. A wordmark is drawn once and used wherever the name appears. Twelve made-up brands, twelve very different results (the gallery at the top of this page):
 
 ```console
 $ brand.py board docs/demo/gallery
