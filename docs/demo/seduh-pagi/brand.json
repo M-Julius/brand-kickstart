@@ -1,0 +1,23 @@
+{
+  "title": "Morning ritual",
+  "why": "Cream line art on espresso, a honey sun rising from the cup: crafted, calm, café-grade.",
+  "name": "Seduh Pagi",
+  "tagline": "Kopi susu, diseduh tiap pagi.",
+  "display": {
+    "family": "Fraunces",
+    "weight": 600
+  },
+  "text": {
+    "family": "Figtree",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#23180f",
+    "paper": "#f4ead9",
+    "accent": "#d99a3d",
+    "support": "#9c6b45"
+  },
+  "concept": "a-morning-ritual",
+  "handle": "seduhpagi",
+  "domain": "seduhpagi.id"
+}

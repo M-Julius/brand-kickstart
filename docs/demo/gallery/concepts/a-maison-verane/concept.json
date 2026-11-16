@@ -1,0 +1,22 @@
+{
+  "title": "Quiet luxury",
+  "why": "A Didone V inside a hairline arch, champagne on black: a fragrance house, not a shop.",
+  "name": "Maison Vérane",
+  "tagline": "Parfums d’auteur, Jakarta.",
+  "display": {
+    "family": "Cormorant Garamond",
+    "weight": 600,
+    "tracking": 0.22,
+    "case": "upper"
+  },
+  "text": {
+    "family": "Jost",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#0c0c0c",
+    "paper": "#f5f0e8",
+    "accent": "#cfae7a",
+    "support": "#8a7a63"
+  }
+}

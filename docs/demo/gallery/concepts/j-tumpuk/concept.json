@@ -1,0 +1,9 @@
+{
+  "title": "Stacked",
+  "why": "Chunky caps extruded like game pieces: playful, solid, made for a table full of friends.",
+  "name": "TUMPUK",
+  "tagline": "Kafe board game, main sampai tutup.",
+  "display": {"family": "Bungee", "weight": 400},
+  "text": {"family": "DM Sans", "weight": 400},
+  "colors": {"ink": "#14213d", "paper": "#fdf6e3", "accent": "#ffb703", "support": "#fb5607"}
+}

@@ -1,0 +1,24 @@
+name: release
+
+# Push a tag like v0.1.0 to publish brand-kickstart.zip, the file Claude.ai and ChatGPT upload.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the skill zip (one top-level folder, readable files)
+        run: |
+          cd skills
+          find brand-kickstart -name __pycache__ -prune -exec rm -rf {} +
+          chmod -R u=rwX,go=rX brand-kickstart
+          zip -r ../brand-kickstart.zip brand-kickstart
+      - run: gh release create "$GITHUB_REF_NAME" brand-kickstart.zip --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -1,0 +1,5 @@
+{
+  "status": 200,
+  "url": "https://api.x.com/i/users/username_available.json?username=bbcnews",
+  "headers": {}
+}

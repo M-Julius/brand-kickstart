@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 270"><defs><clipPath id="sun"><circle cx="190" cy="190" r="110"/></clipPath></defs>
+<circle cx="190" cy="190" r="110" fill="#ef6f3c"/>
+<g clip-path="url(#sun)" fill="#15202b"><rect y="120" width="380" height="7"/><rect y="146" width="380" height="11"/><rect y="174" width="380" height="16"/></g>
+<path d="M0 270 V215 C70 180 130 205 190 215 S310 190 380 205 V270 Z" fill="#f2c14e"/>
+<path d="M0 270 V240 C90 220 160 245 240 238 S340 230 380 240 V270 Z" fill="#f6efe3"/></svg>

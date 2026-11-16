@@ -1,0 +1,21 @@
+{
+  "title": "Dewdrop",
+  "why": "A glassy droplet with real light and shadow: fresh, clinical-clean, made for a phone screen.",
+  "name": "Embun",
+  "tagline": "Skincare yang ringan di kulit.",
+  "display": {
+    "family": "Instrument Serif",
+    "weight": 400,
+    "style": "italic"
+  },
+  "text": {
+    "family": "Jost",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#12343b",
+    "paper": "#eef6f4",
+    "accent": "#7fd1c3",
+    "support": "#2f7f86"
+  }
+}

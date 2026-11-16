@@ -1,0 +1,12 @@
+{
+  "name": "brand-kickstart",
+  "description": "From an idea to a launch-ready brand.",
+  "owner": { "name": "M-Julius" },
+  "plugins": [
+    {
+      "name": "brand-kickstart",
+      "source": "./",
+      "description": "Check a name everywhere, then build the logo and brand kit."
+    }
+  ]
+}

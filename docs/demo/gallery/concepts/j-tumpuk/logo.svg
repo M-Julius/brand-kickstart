@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+<rect width="400" height="400" rx="90" fill="#14213d"/>
+<path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(30 30)" fill="#000" opacity=".25"/>
+<g fill="#c98a00"><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(22 22)"/><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(20 20)"/><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(18 18)"/><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(16 16)"/><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(14 14)"/><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(12 12)"/><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(10 10)"/><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(8 8)"/><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(6 6)"/><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(4 4)"/><path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" transform="translate(2 2)"/></g>
+<path d="M110 110 H270 V160 H215 V290 H165 V160 H110 Z" fill="#fdf6e3" stroke="#ffb703" stroke-width="5" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,21 @@
+{
+  "title": "Measured calm",
+  "why": "Four arches, one in terracotta: rhythm and restraint, the way the studio builds.",
+  "name": "Selasar",
+  "tagline": "Arsitektur & interior.",
+  "display": {
+    "family": "Instrument Serif",
+    "weight": 400,
+    "tracking": 0.01
+  },
+  "text": {
+    "family": "Inter",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#1c1b19",
+    "paper": "#ecebe6",
+    "accent": "#b4532a",
+    "support": "#8c8a83"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Golden hour",
+  "why": "Sun, surf and sea stacked in one coin: sunny, sporty, instantly a beach brand.",
+  "name": "ombak",
+  "tagline": "Swimwear for warm water.",
+  "display": {
+    "family": "Bricolage Grotesque",
+    "weight": 800,
+    "tracking": -0.03
+  },
+  "text": {
+    "family": "DM Sans",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#0b2a3a",
+    "paper": "#f3efe6",
+    "accent": "#ff8a5b",
+    "support": "#2fa4a9"
+  }
+}

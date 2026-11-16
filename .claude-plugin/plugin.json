@@ -1,0 +1,9 @@
+{
+  "name": "brand-kickstart",
+  "description": "Name a brand or project, check the same handle on social and developer platforms and as domains, then draw a logo, favicons, app icons and banners.",
+  "version": "0.1.0",
+  "author": { "name": "M-Julius" },
+  "repository": "https://github.com/M-Julius/brand-kickstart",
+  "license": "MIT",
+  "keywords": ["branding", "naming", "username", "domain", "logo", "favicon"]
+}

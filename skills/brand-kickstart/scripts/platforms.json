@@ -1,0 +1,241 @@
+{
+  "instagram": {
+    "name": "Instagram",
+    "url": "https://www.instagram.com/{name}/",
+    "profile_url": "https://www.instagram.com/{name}/",
+    "check": {
+      "type": "body",
+      "taken_regex": "\"pageID\":\"profilePage\"",
+      "available_regex": "\"pageID\":\"httpErrorPage\""
+    },
+    "min_interval": 1.0,
+    "preflight": true,
+    "rule": {
+      "pattern": "^(?!\\.)(?!.*\\.\\.)[a-z0-9._]{1,30}(?<!\\.)$"
+    },
+    "modes": [
+      "brand"
+    ],
+    "canary": {
+      "taken": "instagram",
+      "available": "zqxv8k2brnd"
+    },
+    "user_agent": "plain"
+  },
+  "threads": {
+    "name": "Threads",
+    "url": "https://www.threads.com/@{name}",
+    "profile_url": "https://www.threads.com/@{name}",
+    "user_agent": "plain",
+    "timeout": 20,
+    "held_by": "instagram",
+    "check": {
+      "type": "body",
+      "taken_regex": "<title[^>]*>[^<]*\\(&#064;[^<]*\\) • Threads",
+      "available_regex": "<title[^>]*>Threads • Log in</title>"
+    },
+    "rule": {
+      "pattern": "^(?!\\.)(?!.*\\.\\.)[a-z0-9._]{1,30}(?<!\\.)$"
+    },
+    "modes": [
+      "brand"
+    ],
+    "min_interval": 1.0,
+    "preflight": true,
+    "canary": {
+      "taken": "zuck",
+      "available": "zqxv8k2brnd"
+    }
+  },
+  "facebook": {
+    "name": "Facebook",
+    "url": "https://www.facebook.com/{name}",
+    "profile_url": "https://www.facebook.com/{name}",
+    "hosts": [
+      "web.facebook.com",
+      "m.facebook.com"
+    ],
+    "timeout": 30,
+    "check": {
+      "type": "body",
+      "taken_regex": "al:android:url\" content=\"fb://(?:profile|page)/",
+      "available_regex": "<title[^>]*>Facebook</title>",
+      "available_unconfirmed": true
+    },
+    "rule": {
+      "pattern": "^(?!\\.)(?!.*\\.\\.)[a-z0-9.]{5,50}(?<!\\.)$"
+    },
+    "modes": [
+      "brand"
+    ],
+    "min_interval": 1.0,
+    "canary": {
+      "taken": "shakira",
+      "available": "zqxv8k2brnd"
+    },
+    "user_agent": "plain"
+  },
+  "tiktok": {
+    "name": "TikTok",
+    "url": "https://www.tiktok.com/oembed?url=https://www.tiktok.com/@{name}",
+    "profile_url": "https://www.tiktok.com/@{name}",
+    "check": {
+      "type": "status",
+      "taken": [
+        200
+      ],
+      "available": [
+        400
+      ]
+    },
+    "rule": {
+      "pattern": "^[a-z0-9._]{2,24}(?<!\\.)$"
+    },
+    "modes": [
+      "brand"
+    ],
+    "canary": {
+      "taken": "charlidamelio",
+      "available": "zqxv8k2brnd"
+    }
+  },
+  "youtube": {
+    "name": "YouTube",
+    "url": "https://www.youtube.com/@{name}",
+    "profile_url": "https://www.youtube.com/@{name}",
+    "check": {
+      "type": "status",
+      "taken": [
+        200
+      ],
+      "available": [
+        404
+      ]
+    },
+    "rule": {
+      "pattern": "^(?![.-])[a-z0-9._-]{3,30}(?<![.-])$"
+    },
+    "modes": [
+      "brand"
+    ],
+    "canary": {
+      "taken": "youtube",
+      "available": "zqxv8k2brnd"
+    }
+  },
+  "x": {
+    "name": "X",
+    "url": "https://api.x.com/i/users/username_available.json?username={name}",
+    "profile_url": "https://x.com/{name}",
+    "check": {
+      "type": "json",
+      "field": "reason",
+      "taken": [
+        "taken"
+      ],
+      "available": [
+        "available"
+      ],
+      "invalid": [
+        "invalid_username",
+        "is_banned_word"
+      ]
+    },
+    "rule": {
+      "pattern": "^[a-z0-9_]{5,15}$"
+    },
+    "modes": [
+      "brand",
+      "project"
+    ],
+    "canary": {
+      "taken": "bbcnews",
+      "available": "zqxv8k2brnd"
+    }
+  },
+  "github": {
+    "name": "GitHub",
+    "url": "https://github.com/{name}",
+    "profile_url": "https://github.com/{name}",
+    "check": {
+      "type": "status",
+      "taken": [
+        200
+      ],
+      "available": [
+        404
+      ]
+    },
+    "rule": {
+      "pattern": "^[a-z0-9](?:[a-z0-9]|-(?=[a-z0-9])){0,38}$"
+    },
+    "modes": [
+      "project"
+    ],
+    "canary": {
+      "taken": "github",
+      "available": "zqxv8k2brnd"
+    }
+  },
+  "npm": {
+    "name": "npm",
+    "url": "https://registry.npmjs.org/{name}",
+    "profile_url": "https://www.npmjs.com/package/{name}",
+    "check": {
+      "type": "status",
+      "taken": [
+        200
+      ],
+      "available": [
+        404
+      ]
+    },
+    "rule": {
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,213}$"
+    },
+    "modes": [
+      "project"
+    ],
+    "canary": {
+      "taken": "react",
+      "available": "zqxv8k2brnd"
+    }
+  },
+  "pypi": {
+    "name": "PyPI",
+    "url": "https://pypi.org/pypi/{name}/json",
+    "profile_url": "https://pypi.org/project/{name}/",
+    "check": {
+      "type": "status",
+      "taken": [
+        200
+      ],
+      "available": [
+        404
+      ]
+    },
+    "rule": {
+      "pattern": "^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$"
+    },
+    "modes": [
+      "project"
+    ],
+    "canary": {
+      "taken": "requests",
+      "available": "zqxv8k2brnd"
+    }
+  },
+  "producthunt": {
+    "name": "Product Hunt",
+    "profile_url": "https://www.producthunt.com/products/{name}",
+    "check": {
+      "type": "manual_only"
+    },
+    "rule": {
+      "pattern": "^[a-z0-9-]{1,60}$"
+    },
+    "modes": [
+      "project"
+    ]
+  }
+}

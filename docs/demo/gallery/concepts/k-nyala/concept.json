@@ -1,0 +1,9 @@
+{
+  "title": "Glow",
+  "why": "Glossy candy-gradient letters that look lit from inside: an AI app that feels fun, not cold.",
+  "name": "nyala",
+  "tagline": "Asisten AI yang nyalain ide.",
+  "display": {"family": "Outfit", "weight": 800, "tracking": -0.01},
+  "text": {"family": "Outfit", "weight": 400},
+  "colors": {"ink": "#0e0b1f", "paper": "#f5f3ff", "accent": "#ff4fd8", "support": "#7b5cff"}
+}

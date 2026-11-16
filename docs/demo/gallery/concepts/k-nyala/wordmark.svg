@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 160">
+<defs>
+<linearGradient id="wm-face" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc2f2"/><stop offset=".45" stop-color="#ff4fd8"/><stop offset="1" stop-color="#7b5cff"/></linearGradient>
+<linearGradient id="wm-shine" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="wm-blur" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="7"/></filter>
+<clipPath id="wm-top"><rect width="440" height="64"/></clipPath>
+</defs>
+<g font-family="Outfit" font-weight="800" font-size="150" letter-spacing="-1.5">
+<text x="4" y="122" fill="#2a0a3a" opacity=".45" filter="url(#wm-blur)">nyala</text>
+<text x="0" y="110" fill="url(#wm-face)">nyala</text>
+<text x="0" y="110" fill="url(#wm-shine)" clip-path="url(#wm-top)" opacity=".7">nyala</text>
+</g>
+</svg>

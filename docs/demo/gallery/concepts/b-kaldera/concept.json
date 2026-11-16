@@ -1,0 +1,22 @@
+{
+  "title": "Summit grade",
+  "why": "A caldera cut into a solid peak, ember sun above: tough gear, built for altitude.",
+  "name": "Kaldera",
+  "tagline": "Gear for the long way up.",
+  "display": {
+    "family": "Archivo Black",
+    "weight": 400,
+    "tracking": 0.08,
+    "case": "upper"
+  },
+  "text": {
+    "family": "Archivo",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#16241d",
+    "paper": "#eef0e8",
+    "accent": "#e2602c",
+    "support": "#8fa58b"
+  }
+}

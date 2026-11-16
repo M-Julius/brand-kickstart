@@ -1,0 +1,50 @@
+name: canary
+
+# Weekly live check: does every platform still answer the way platforms.json expects?
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  self-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Run self-test
+        id: selftest
+        run: |
+          set +e
+          python skills/brand-kickstart/scripts/check.py --self-test --json > report.json
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+          cat report.json
+      - name: Warn about blocked platforms
+        run: |
+          python - <<'PY'
+          import json
+          for r in json.load(open("report.json")):
+              if r["state"] == "blocked":
+                  print(f"::warning::{r['platform']} blocked the CI runner: {r['detail']}")
+          PY
+      - name: Open or update issue for broken platforms
+        if: steps.selftest.outputs.code == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          broken=$(python -c "import json;print(','.join(r['platform'] for r in json.load(open('report.json')) if r['state']=='broken'))")
+          title="platform broken: ${broken}"
+          body=$(printf 'The weekly canary found platforms that no longer behave as `platforms.json` expects.\n\n```json\n%s\n```\n\nSee CONTRIBUTING.md, "Fixing a broken platform".' "$(cat report.json)")
+          existing=$(gh issue list --state open --search "in:title platform broken:" --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --title "$title" --body "$body"
+          else
+            gh issue create --title "$title" --body "$body"
+          fi
+          exit 1

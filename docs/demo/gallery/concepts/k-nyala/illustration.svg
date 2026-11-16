@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 270">
+<defs>
+<radialGradient id="orb" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffc2f2"/><stop offset=".45" stop-color="#ff4fd8"/><stop offset="1" stop-color="#5a3fd6"/></radialGradient>
+<filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>
+</defs>
+<ellipse cx="190" cy="236" rx="90" ry="12" fill="#000" opacity=".5" filter="url(#b)"/>
+<circle cx="190" cy="130" r="90" fill="url(#orb)"/>
+<circle cx="190" cy="130" r="88" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="3"/>
+<ellipse cx="160" cy="88" rx="34" ry="20" fill="#fff" opacity=".6" filter="url(#b)"/>
+<circle cx="150" cy="82" r="7" fill="#fff"/>
+<path d="M310 50 Q314 70 330 74 Q314 78 310 98 Q306 78 290 74 Q306 70 310 50 Z" fill="#f5f3ff"/>
+<path d="M66 170 Q69 184 80 187 Q69 190 66 204 Q63 190 52 187 Q63 184 66 170 Z" fill="#f5f3ff" opacity=".8"/>
+</svg>

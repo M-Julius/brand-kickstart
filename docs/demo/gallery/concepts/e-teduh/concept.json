@@ -1,0 +1,20 @@
+{
+  "title": "Slow leaf",
+  "why": "A single veined leaf in deep green: the shade and quiet the name promises.",
+  "name": "Teduh",
+  "tagline": "Rumah teh, jeda sejenak.",
+  "display": {
+    "family": "DM Serif Display",
+    "weight": 400
+  },
+  "text": {
+    "family": "DM Sans",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#233127",
+    "paper": "#f1ede2",
+    "accent": "#b88b4a",
+    "support": "#7f9c7a"
+  }
+}

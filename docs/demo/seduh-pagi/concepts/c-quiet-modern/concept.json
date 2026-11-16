@@ -1,0 +1,23 @@
+{
+  "title": "Quiet modern",
+  "why": "Sun above, cup below, one horizon between: a mark that works blind-embossed on a bag.",
+  "name": "Seduh Pagi",
+  "tagline": "Kopi susu, diseduh tiap pagi.",
+  "display": {
+    "family": "Jost",
+    "weight": 500,
+    "tracking": 0.3,
+    "case": "upper"
+  },
+  "text": {
+    "family": "Cormorant Garamond",
+    "weight": 500,
+    "style": "italic"
+  },
+  "colors": {
+    "ink": "#1a1a1a",
+    "paper": "#f2efe9",
+    "accent": "#c7a27c",
+    "support": "#6f6a62"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Echo",
+  "why": "The name is the logo: a tight lowercase grotesk with three echo arcs, loud on a feed and easy to say.",
+  "name": "gema",
+  "tagline": "Podcast yang bikin kepikiran.",
+  "display": {"family": "Space Grotesk", "weight": 700, "tracking": -0.03},
+  "text": {"family": "Inter", "weight": 400},
+  "colors": {"ink": "#1b1530", "paper": "#f4f1ea", "accent": "#ff5a4e", "support": "#8b7fd6"}
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Old counsel",
+  "why": "Tracked Caslon capitals and a W R lettermark between brass rules: steady, discreet, built to last.",
+  "name": "Wirya & Rekan",
+  "tagline": "Konsultan hukum bisnis sejak 1998.",
+  "display": {"family": "Libre Caslon Text", "weight": 700, "tracking": 0.14, "case": "upper"},
+  "text": {"family": "Source Sans 3", "weight": 400},
+  "colors": {"ink": "#1c2430", "paper": "#f3efe6", "accent": "#b08d57", "support": "#6b7a8c"}
+}

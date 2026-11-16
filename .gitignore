@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+.superpowers/
+.claude/
+# demo build intermediates (docs/demo/build.py regenerates them)
+docs/demo/*/fonts/
+docs/demo/*/pages/
+docs/demo/*/concepts/*/board.svg
+docs/demo/*/concepts/all.svg
+docs/demo/*/mockups/*.svg
+docs/demo/*/palette.svg
+docs/superpowers/
+# demo PNGs are rebuilt by docs/demo/build.py; the README shows the standalone SVGs in docs/demo/preview/
+docs/demo/**/*.png

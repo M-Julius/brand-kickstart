@@ -1,0 +1,21 @@
+{
+  "title": "First light",
+  "why": "A sun built from rising bars: growth you can read, optimism you can trust.",
+  "name": "Arunika",
+  "tagline": "Investasi yang terang.",
+  "display": {
+    "family": "Sora",
+    "weight": 700,
+    "tracking": -0.02
+  },
+  "text": {
+    "family": "Inter",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#0b1020",
+    "paper": "#f4f6fb",
+    "accent": "#ffb547",
+    "support": "#5b7cfa"
+  }
+}

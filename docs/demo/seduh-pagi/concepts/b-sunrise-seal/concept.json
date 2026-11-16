@@ -1,0 +1,21 @@
+{
+  "title": "Sunrise seal",
+  "why": "A striped sun setting into a bold cup: loud on a cup sleeve, readable at any size.",
+  "name": "Seduh Pagi",
+  "tagline": "Kopi susu, diseduh tiap pagi.",
+  "display": {
+    "family": "Bricolage Grotesque",
+    "weight": 800,
+    "tracking": -0.02
+  },
+  "text": {
+    "family": "Figtree",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#15202b",
+    "paper": "#f6efe3",
+    "accent": "#ef6f3c",
+    "support": "#f2c14e"
+  }
+}

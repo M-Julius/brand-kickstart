@@ -1,0 +1,21 @@
+{
+  "title": "Isometric",
+  "why": "A taped box in true isometric, three tones of one light: solid, organised, ready to ship.",
+  "name": "Kotak Kita",
+  "tagline": "Pindahan rapi, tanpa drama.",
+  "display": {
+    "family": "Unbounded",
+    "weight": 700,
+    "tracking": -0.02
+  },
+  "text": {
+    "family": "DM Sans",
+    "weight": 400
+  },
+  "colors": {
+    "ink": "#1d2433",
+    "paper": "#f4f1ea",
+    "accent": "#f2a93b",
+    "support": "#4f7cff"
+  }
+}

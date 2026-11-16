@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 270"><defs><radialGradient id="d2" cx=".36" cy=".52" r=".75"><stop offset="0" stop-color="#e6fbf6"/><stop offset=".42" stop-color="#7fd1c3"/><stop offset="1" stop-color="#2f7f86"/></radialGradient>
+<radialGradient id="bg" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#1d4b53"/><stop offset="1" stop-color="#12343b"/></radialGradient>
+<filter id="s6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="s10" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter></defs>
+<ellipse cx="190" cy="250" rx="160" ry="16" fill="#000" opacity=".35" filter="url(#s10)"/>
+<rect x="70" y="70" width="90" height="170" rx="22" fill="#eef6f4"/><rect x="88" y="40" width="54" height="36" rx="8" fill="#2f7f86"/>
+<rect x="70" y="70" width="28" height="170" rx="14" fill="#fff" opacity=".5"/><rect x="132" y="70" width="28" height="170" rx="14" fill="#000" opacity=".08"/>
+<g transform="translate(190 30) scale(.62)"><path d="M200 78 C200 78 116 182 116 244 C116 292 154 330 200 330 C246 330 284 292 284 244 C284 182 200 78 200 78 Z" fill="url(#d2)"/><ellipse cx="166" cy="214" rx="17" ry="40" transform="rotate(24 166 214)" fill="#fff" opacity=".65" filter="url(#s6)"/><circle cx="182" cy="166" r="7" fill="#fff"/></g>
+<circle cx="320" cy="210" r="22" fill="url(#d2)"/><circle cx="313" cy="202" r="5" fill="#fff" opacity=".9"/></svg>
