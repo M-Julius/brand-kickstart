@@ -283,9 +283,10 @@ def board_svg(cid, c, has_illustration, has_flat=False):
     rule = lambda y: f'<path d="M1024 {y} H1536" stroke="{ink}" stroke-opacity=".14" stroke-width="1.5"/>'  # noqa: E731
     why = "".join(f'<tspan x="1024" dy="{0 if i == 0 else 30}">{_esc(line)}</tspan>'
                   for i, line in enumerate(wrap(c["why"], 46)[:3]))
+    dim = ' opacity=".7"'  # outside the f-string: Python < 3.12 allows no backslash or same quote inside {}
     stripes = "".join(
         f'<rect x="{1024 + i * 128}" y="560" width="128" height="120" fill="{col[k]}"/>'
-        f'<text x="{1040 + i * 128}" y="584" letter-spacing="1.6" {_font(t, 11, on_color(c["colors"][k]), " opacity=\".7\"")}>{k.upper()}</text>'
+        f'<text x="{1040 + i * 128}" y="584" letter-spacing="1.6" {_font(t, 11, on_color(c["colors"][k]), dim)}>{k.upper()}</text>'
         f'<text x="{1040 + i * 128}" y="664" {_font(t, 15, on_color(c["colors"][k]))}>{col[k]}</text>'
         for i, k in enumerate(COLOR_KEYS))
     avatars = "".join(
