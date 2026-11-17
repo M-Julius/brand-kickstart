@@ -97,7 +97,20 @@ Change one value to fit the brief rather than inventing all four.
 | Mascot or character | a simple face or creature | kids, games, communities, creators | big eyes and a simple outline; the face must read at 44 px |
 | Emblem or badge | the mark inside a circle or shield with a border | cafés, craft, heritage, sports | do not put tiny text on the ring, since it is unreadable as an avatar |
 | Wordmark only | the name itself is the logo, with one drawn twist; the avatar is the first letter | short names, media, fashion, SaaS | write `wordmark.svg`; see "Text-based logos" below |
+| Glyph in motion | a glyph (`@`, `#`, a letter) whose stroke flows on into an arrow or a trail | launches, growth, tools that "take you somewhere" | see "Glyph in motion" below |
 | Punctuation or glyph | `,` `;` `{}` `#` used as the mark | names that suggest a symbol | use the glyph's shape as a path, not a `<text>` |
+
+## Glyph in motion
+
+One stroke that changes meaning halfway: the glyph is drawn, then the same line keeps going and becomes an arrow. The logo of the brand-kickstart repo is this: an `@` whose ring sweeps into a launch arrow.
+
+- **End the glyph where its direction already points the way the arrow goes.** For a ring drawn clockwise, end it at the top (it is heading right there), not at the upper right (it is heading down there). A tail that starts against the ring's direction reads as a kink.
+- **Join with one cubic curve whose first control point lies on the ring's tangent and whose last lies on the arrow's line**, e.g. ring end `(195,100)` heading right, arrow tip `(334,74)` heading up-right: `M195 100 C235 98 305 103 334 74`. Same stroke width and round caps as the ring, so the join has no seam.
+- **Color: the tail starts in the ring's color and ends in the accent.** Use `gradientUnits="userSpaceOnUse"` from the join point to the tip, with the accent arriving at about 75–80%. A hard color switch at the join looks like two shapes.
+- Draw the arrowhead as its own short path (`M292 72 H336 V116`) in the accent.
+- Keep the tip inside the centre circle, radius 150 of 400 with the stroke cap included. Shrink the whole group with one `transform` rather than shortening the arrow, because a stubby arrow reads as a blob.
+- In 3D: a glow under the arrowhead needs a filter region of about `x="-150%" width="400%"`. A tighter one clips the blur into a visible square.
+- Echo it in the wordmark: replace one character of the name, such as a hyphen, a dot or a space, with the same arrow as a `<path>` in the accent (`brand↗kickstart`).
 
 ## Text-based logos
 

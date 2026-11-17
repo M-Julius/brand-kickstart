@@ -38,13 +38,34 @@ class FacebookRunTest(unittest.TestCase):
             seen.append(kw)
             return R(TAKEN)
         check.check_platform("facebook", P, ["acmestudio"], fetch, lambda s: None)
-        self.assertEqual(seen, [{"timeout": FB["timeout"], "user_agent": check.PLAIN_UA}])
+        self.assertEqual(seen, [{"timeout": FB["timeout"], "user_agent": check.PLAIN_UA}] * 2)  # preflight + name
 
     def test_self_test_accepts_likely_free(self):
         def fetch(url, **kw):
             return R(TAKEN if url.endswith("/" + FB["canary"]["taken"]) else FREE)
         report = check.self_test({"facebook": FB}, fetch, lambda s: None)
         self.assertEqual(report[0]["state"], "ok", report)
+
+    def test_generic_page_for_everyone_is_blocked_not_likely_free(self):
+        # seen from a sandbox IP: even the taken canary gets the bare "Facebook" page
+        res = check.check_platform("facebook", P, ["acmestudio", "kukikalabs"], lambda url, **kw: R(FREE),
+                                   lambda s: None)
+        self.assertEqual({r["reason"] for r in res.values()}, {"blocked"})
+
+    def test_walled_page_falls_back_to_graph_api(self):
+        graph = FB["fallback"]["url"]
+
+        def fetch(url, **kw):
+            if url == graph.format(name=FB["fallback"]["canary"]["taken"]):
+                return check.Response(200, "{}", url)
+            if url.startswith("https://graph.facebook.com/"):
+                return check.Response(404, "{}", url)
+            return R("<html>", url="https://www.facebook.com/login/?next=x")  # main page walled
+        res = check.check_platform("facebook", P, ["kukikalabs"], fetch, lambda s: None)
+        r = res["kukikalabs"]
+        self.assertEqual((r["status"], r["reason"], r["via"]), ("unknown", "likely_free", FB["fallback"]["fallback_name"]))
+        self.assertEqual(r["url"], "https://www.facebook.com/kukikalabs")  # links to the profile, not the API
+        self.assertIn("public Pages", check._hints([{**r, "input": "kukikalabs"}], ["facebook"], P)[0])
 
 
 class FacebookRenderTest(unittest.TestCase):

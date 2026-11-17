@@ -32,7 +32,8 @@
     "check": {
       "type": "body",
       "taken_regex": "<title[^>]*>[^<]*\\(&#064;[^<]*\\) • Threads",
-      "available_regex": "<title[^>]*>Threads • Log in</title>"
+      "available_regex": "<title[^>]*>Threads • Log in</title>",
+      "login_is_answer": true
     },
     "rule": {
       "pattern": "^(?!\\.)(?!.*\\.\\.)[a-z0-9._]{1,30}(?<!\\.)$"
@@ -56,6 +57,23 @@
       "m.facebook.com"
     ],
     "timeout": 30,
+    "fallback": {
+      "fallback_name": "Facebook's public Graph API",
+      "url": "https://graph.facebook.com/{name}/picture?redirect=false",
+      "hosts": [],
+      "timeout": 20,
+      "user_agent": "default",
+      "check": {
+        "type": "status",
+        "taken": [200],
+        "available": [400, 404],
+        "available_unconfirmed": true
+      },
+      "canary": {
+        "taken": "cocacola",
+        "available": "zqxv8k2brnd"
+      }
+    },
     "check": {
       "type": "body",
       "taken_regex": "al:android:url\" content=\"fb://(?:profile|page)/",
@@ -69,6 +87,7 @@
       "brand"
     ],
     "min_interval": 1.0,
+    "preflight": true,
     "canary": {
       "taken": "shakira",
       "available": "zqxv8k2brnd"

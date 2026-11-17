@@ -70,6 +70,8 @@ python3 -m venv .venv && .venv/bin/pip install resvg-py  # only for brand kit an
    | `hosts` | Optional. Other hosts the platform may redirect to, e.g. `["web.facebook.com"]`. A redirect to any other host is treated as blocked. |
    | `check.available_unconfirmed` | Optional. `true` if the "free" page also shows for names that exist but are hidden. The result becomes ✅? (`likely_free`), never ✅. |
    | `preflight` | Optional. `true` to check the taken canary before each run and stop early if this IP is blocked. |
+   | `fallback` | Optional, needs `preflight`. A second public source used when the preflight fails: fields that override the platform's own (`url`, `check`, `canary`, `hosts`, `timeout`, `user_agent`) plus `fallback_name`, shown to the user. Facebook falls back to its Graph API. |
+   | `check.login_is_answer` | Optional. `true` if a login page is how the platform says a name is free (Threads). Elsewhere a redirect to a login page is `login_wall`. |
 
 3. **Verify against real names:**
 
