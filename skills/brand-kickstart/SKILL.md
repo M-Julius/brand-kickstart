@@ -7,6 +7,11 @@ description: Brainstorm brand or project names and check which ones are free as 
 
 Help the user go from an idea to a launch-ready brand: **one name that is free everywhere they care about**, then a logo and assets for it. You brainstorm; the bundled script checks. `scripts/check.py` lives next to this file. Run it by its full path with `python3`.
 
+Always:
+- **The user already has a name?** Do not brainstorm others first. Check that name with `--variants` (step 4), then offer the logo (step 8).
+- **Every "free" or "taken" comes from `check.py` output**, never from memory or a web search. If you cannot run code here, say so and give the user the command to run on their own machine.
+- **The look comes from the concepts you draw** (step 8). Do not show web or stock photos as a moodboard: they are other brands' work.
+
 ## 1. Understand the brief
 
 Learn what is being named, for whom, the language and the vibe. Note any platforms or domain extensions the user names ("check IG, TikTok and .id", "skip X"). If they gave none, use their config file or the defaults.
