@@ -69,6 +69,7 @@
       "brand"
     ],
     "min_interval": 1.0,
+    "preflight": true,
     "canary": {
       "taken": "shakira",
       "available": "zqxv8k2brnd"

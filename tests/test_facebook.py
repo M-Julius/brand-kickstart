@@ -38,13 +38,19 @@ class FacebookRunTest(unittest.TestCase):
             seen.append(kw)
             return R(TAKEN)
         check.check_platform("facebook", P, ["acmestudio"], fetch, lambda s: None)
-        self.assertEqual(seen, [{"timeout": FB["timeout"], "user_agent": check.PLAIN_UA}])
+        self.assertEqual(seen, [{"timeout": FB["timeout"], "user_agent": check.PLAIN_UA}] * 2)  # preflight + name
 
     def test_self_test_accepts_likely_free(self):
         def fetch(url, **kw):
             return R(TAKEN if url.endswith("/" + FB["canary"]["taken"]) else FREE)
         report = check.self_test({"facebook": FB}, fetch, lambda s: None)
         self.assertEqual(report[0]["state"], "ok", report)
+
+    def test_generic_page_for_everyone_is_blocked_not_likely_free(self):
+        # seen from a sandbox IP: even the taken canary gets the bare "Facebook" page
+        res = check.check_platform("facebook", P, ["acmestudio", "kukikalabs"], lambda url, **kw: R(FREE),
+                                   lambda s: None)
+        self.assertEqual({r["reason"] for r in res.values()}, {"blocked"})
 
 
 class FacebookRenderTest(unittest.TestCase):
