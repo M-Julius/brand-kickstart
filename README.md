@@ -175,10 +175,11 @@ On Claude Code older than 2.1.275, run `/plugin marketplace add M-Julius/brand-k
 
 ### Claude.ai and ChatGPT, by upload
 
-1. Download `brand-kickstart.zip` from the [latest release](https://github.com/M-Julius/brand-kickstart/releases/latest).
-2. Upload it:
-   - **Claude.ai**: Settings → Capabilities → Skills → Upload skill.
-   - **ChatGPT**: Skills → Create → Upload from your computer.
+Download the zip for your app from the [latest release](https://github.com/M-Julius/brand-kickstart/releases/latest) and upload it:
+- **Claude.ai**: `brand-kickstart.zip`, in Settings → Capabilities → Skills → Upload skill.
+- **ChatGPT**: `brand-kickstart-chatgpt.zip`, uploaded as a plugin. ChatGPT needs the `skills/brand-kickstart/` layout, so the Claude.ai zip is refused there.
+
+The repository's own "Download ZIP" contains a lot more than the skill. Use the release zips instead.
 
 These apps run the scripts in a sandbox, so two limits apply:
 - **Name checks need internet access.** On Claude.ai, "package managers only" network access lets npm and PyPI through but blocks the social platforms and the domain lookup. Allow all domains for code execution in Settings. Even then, Instagram, Threads and GitHub may limit the shared sandbox IP. Anything the sandbox cannot reach shows ❓ with a link rather than a guess. Running the check on your own machine gives full results.

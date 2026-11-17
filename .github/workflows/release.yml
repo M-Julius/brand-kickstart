@@ -1,6 +1,6 @@
 name: release
 
-# Push a tag like v0.1.0 to publish brand-kickstart.zip, the file Claude.ai and ChatGPT upload.
+# Push a tag like v0.1.0 to publish brand-kickstart.zip (Claude.ai) and brand-kickstart-chatgpt.zip (ChatGPT).
 on:
   push:
     tags: ["v*"]
@@ -19,12 +19,13 @@ jobs:
           find brand-kickstart -name __pycache__ -prune -exec rm -rf {} +
           chmod -R u=rwX,go=rX brand-kickstart
           zip -r ../brand-kickstart.zip brand-kickstart
+          cd .. && zip -r brand-kickstart-chatgpt.zip skills/brand-kickstart  # ChatGPT wants skills/<name>/SKILL.md
       # a release written by hand keeps its notes and only gets the zip
       - run: |
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" brand-kickstart.zip --clobber
+            gh release upload "$GITHUB_REF_NAME" brand-kickstart.zip brand-kickstart-chatgpt.zip --clobber
           else
-            gh release create "$GITHUB_REF_NAME" brand-kickstart.zip --generate-notes
+            gh release create "$GITHUB_REF_NAME" brand-kickstart.zip brand-kickstart-chatgpt.zip --generate-notes
           fi
         env:
           GH_TOKEN: ${{ github.token }}
