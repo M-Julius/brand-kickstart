@@ -100,7 +100,7 @@ class CliTest(unittest.TestCase):
         self.assertIn("https://youtube.test/a", md)
 
     def test_sandbox_hint_replaces_per_platform_hints(self):
-        results = [res("a", "a", k, "unknown", "blocked") for k in ("instagram", "youtube", "x")]
+        results = [res("a", "a", k, "unknown", "network_error") for k in ("instagram", "youtube", "x")]
         results.append(res("a", "a", "npm", "available"))
         hints = check._hints(results, ["instagram", "youtube", "x", "npm"], P)
         self.assertEqual(len(hints), 1)

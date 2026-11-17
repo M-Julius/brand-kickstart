@@ -39,6 +39,13 @@ HEADERS = {
 # Platforms with "user_agent": "plain" (Instagram, Facebook) serve an error page to a client that claims to
 # be Chrome without Chrome's TLS fingerprint, and the real page to a client that says what it is.
 PLAIN_UA = "brand-kickstart/0.1 (+https://github.com/M-Julius/brand-kickstart)"
+# Bodies of 403s written by a sandbox's egress proxy rather than by the site itself.
+_SANDBOX_RE = re.compile(r"sessions are bound to their configured repositories|__agentproxy|"
+                         r"[Hh]ost not (?:in|on) (?:the )?allow ?list|[Dd]omain (?:is )?not allowed|"
+                         r"blocked by (?:the )?(?:egress|sandbox|network) (?:proxy|policy)")
+_LOGIN_RE = re.compile(r"(?:^|/)(?:accounts/)?login(?:\.php)?(?:/|$)")
+# Reasons that mean "this source gave no answer, stop asking it".
+STOP_REASONS = ("rate_limited", "blocked", "sandbox_blocked", "login_wall")
 
 
 @dataclass
@@ -74,17 +81,26 @@ def classify(platform: dict, resp: Response):
         return "unknown", "rate_limited"
     if resp.status >= 500:  # transient server trouble, e.g. X's 500 "Internal error" (code 131)
         return "unknown", "server_error"
+    # A sandbox proxy (Claude.ai, ChatGPT) answers for the site with its own 403: the site never saw it.
+    if resp.status in (403, 407) and _SANDBOX_RE.search(resp.body):
+        return "unknown", "sandbox_blocked"
     # Redirected to another host (consent page, interstitial): that page says nothing about the name.
     if urlsplit(resp.url).hostname not in {urlsplit(platform["url"]).hostname, *platform.get("hosts", [])}:
         return "unknown", "blocked"
-    if (resp.status == 403 or "accounts/login" in resp.url
+    # Sent to a login page (Instagram, Facebook do this to cloud/datacenter IPs): no answer about the name.
+    # Threads is the exception: its login page *is* the answer for a free name ("login_is_answer").
+    if (not c.get("login_is_answer") and _LOGIN_RE.search(urlsplit(resp.url).path)
+            and not _LOGIN_RE.search(urlsplit(platform["url"]).path)):
+        return "unknown", "login_wall"
+    if (resp.status == 403
             or (c.get("blocked_regex") and re.search(c["blocked_regex"], resp.body))):
         return "unknown", "blocked"
     if c["type"] == "status":
         if resp.status in c["taken"]:
             return "taken", None
         if resp.status in c["available"]:
-            return "available", None
+            # e.g. Facebook's Graph API only sees public Pages, so a 404/400 there cannot rule out a profile
+            return ("unknown", "likely_free") if c.get("available_unconfirmed") else ("available", None)
     elif c["type"] == "json":
         try:
             data = json.loads(resp.body)
@@ -307,19 +323,35 @@ def check_platform(key: str, platforms: dict, handles: list, fetch=fetch, sleep=
             status, reason = classify(p, fetch(url, **extra))
         return status, reason
 
-    stop = None
-    if todo and p.get("preflight"):
+    def preflight():
         # A known-taken handle must read as taken, else this IP is being served something else.
         status, reason = request(p["canary"]["taken"])
-        if status != "taken":
-            stop = "rate_limited" if reason == "rate_limited" else "blocked"
+        if status == "taken":
+            return None
+        return reason if reason in STOP_REASONS or reason == "network_error" else "blocked"
+
+    stop = preflight() if todo and p.get("preflight") else None
+    via = None
+    if todo and stop and p.get("fallback"):
+        # The main page is walled off from this IP; a second public source (e.g. Facebook's Graph API) may answer.
+        primary_stop = stop
+        p = {**p, **p["fallback"]}
+        extra = {"timeout": p["timeout"]} if "timeout" in p else {}
+        if p.get("user_agent") == "plain":
+            extra["user_agent"] = PLAIN_UA
+        interval = p.get("min_interval", DEFAULT_INTERVAL)
+        stop = preflight()
+        via = "fallback" if not stop else None
+        stop = stop and primary_stop  # report why the main page failed, not the fallback
     for h in todo:
         if stop:
             results[h] = result(h, "unknown", stop)
             continue
         status, reason = request(h)
         results[h] = result(h, status, reason)
-        if reason in ("rate_limited", "blocked"):
+        if via:
+            results[h]["via"] = p["fallback_name"] if "fallback_name" in p else "fallback"
+        if reason in STOP_REASONS:
             stop = reason
     return results
 
@@ -434,20 +466,34 @@ def _source(key: str, platforms: dict) -> str:
 
 def _hints(results: list, keys: list, platforms: dict) -> list:
     hints = []
-    # A sandbox that only lets package registries out (Claude.ai, ChatGPT) refuses every other site at once;
-    # that is the network, not one platform's rate limit, and waiting will not help.
-    failed = {_source(r["platform"], platforms) for r in results
-              if r.get("reason") in ("rate_limited", "blocked", "network_error")}
-    answered = {_source(r["platform"], platforms) for r in results if r["status"] != "unknown"}
-    if len(failed - answered) >= 3:
-        names = sorted(platforms[s]["name"] if s in platforms else "domain lookup" for s in failed - answered)
-        hints.append(f"{', '.join(names)} could not be reached from this network. In a sandbox (Claude.ai, "
-                     "ChatGPT) that usually means only package registries are allowed: allow all domains for "
-                     "code execution in the app settings, or run the check on your own machine.")
-        return hints
+    # Only failures where the site itself never answered say anything about the network. A 403, a login
+    # page or a 429 came from the platform, so the network was fine and opening more domains will not help.
+    def names_for(reasons):
+        failed = {_source(r["platform"], platforms) for r in results if r.get("reason") in reasons}
+        return sorted(platforms[s]["name"] if s in platforms else "domain lookup" for s in failed)
+
+    unreachable = names_for(("network_error",))
+    if len(unreachable) >= 3:
+        hints.append(f"{', '.join(unreachable)} could not be reached from this network at all. In a sandbox "
+                     "(Claude.ai, ChatGPT) that usually means only package registries are allowed: allow all "
+                     "domains for code execution in the app settings, or run the check on your own machine.")
+    sandboxed = names_for(("sandbox_blocked",))
+    if sandboxed:
+        hints.append(f"{', '.join(sandboxed)}: this session's own network proxy refused the request, so the "
+                     "platform never saw it. This is a sandbox rule, not a rate limit: waiting or rerunning will "
+                     "not help. Open the links, or run the check on your own machine.")
+    walled = names_for(("login_wall",))
+    if walled:
+        hints.append(f"{', '.join(walled)} sent a login page instead of the profile. Platforms do this to cloud "
+                     "and datacenter IPs, so waiting rarely helps. Open the links, or run the check on your own "
+                     "machine.")
     for r in results:
         reason, key = r.get("reason") or "", r["platform"]
-        if reason.startswith("held_by:"):
+        if reason == "likely_free" and r.get("via"):
+            hint = (f"{platforms[key]['name']}'s profile page needed a login, so this was checked through "
+                    f"{r['via']}, which only sees public Pages. {LIKELY} means no Page has the name; a personal "
+                    f"profile could still hold it. Open the {LIKELY} links to be sure.")
+        elif reason.startswith("held_by:"):
             holder = platforms[reason.split(":", 1)[1]]["name"]
             hint = (f"{platforms[key]['name']} handles come with the {holder} account. {HELD} means that {holder} "
                     f"account exists but has not turned on {platforms[key]['name']}: if it is yours, turn on "
@@ -643,7 +689,7 @@ def self_test(platforms: dict, fetch=fetch, sleep=time.sleep) -> list:
         t, a = res[taken_name], res[free_name]
         detail = f"{taken_name}: {t['status']} ({t['reason']}), {free_name}: {a['status']} ({a['reason']})"
         reasons = {t["reason"] or "", a["reason"] or ""}
-        if reasons & {"blocked", "rate_limited", "network_error"}:
+        if reasons & {"blocked", "rate_limited", "network_error", "sandbox_blocked", "login_wall"}:
             state = "blocked"
         elif t["status"] == "taken" and (a["status"] == "available" or a["reason"] == "likely_free"):
             state = "ok"

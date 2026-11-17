@@ -46,7 +46,11 @@ class ClassifyTest(unittest.TestCase):
     def test_blocked(self):
         self.assertEqual(classify(P["youtube"], R(403, "")), ("unknown", "blocked"))
         login = R(200, "<html>", url="https://www.instagram.com/accounts/login/?next=x")
-        self.assertEqual(classify(P["instagram"], login), ("unknown", "blocked"))
+        self.assertEqual(classify(P["instagram"], login), ("unknown", "login_wall"))
+
+    def test_sandbox_proxy_403(self):
+        proxy = R(403, "Host not in allowlist")
+        self.assertEqual(classify(P["youtube"], proxy), ("unknown", "sandbox_blocked"))
 
     def test_body_without_any_marker_is_unknown(self):
         self.assertEqual(classify(P["instagram"], R(200, "<html></html>")),

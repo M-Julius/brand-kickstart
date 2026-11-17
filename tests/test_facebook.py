@@ -52,6 +52,21 @@ class FacebookRunTest(unittest.TestCase):
                                    lambda s: None)
         self.assertEqual({r["reason"] for r in res.values()}, {"blocked"})
 
+    def test_walled_page_falls_back_to_graph_api(self):
+        graph = FB["fallback"]["url"]
+
+        def fetch(url, **kw):
+            if url == graph.format(name=FB["fallback"]["canary"]["taken"]):
+                return check.Response(200, "{}", url)
+            if url.startswith("https://graph.facebook.com/"):
+                return check.Response(404, "{}", url)
+            return R("<html>", url="https://www.facebook.com/login/?next=x")  # main page walled
+        res = check.check_platform("facebook", P, ["kukikalabs"], fetch, lambda s: None)
+        r = res["kukikalabs"]
+        self.assertEqual((r["status"], r["reason"], r["via"]), ("unknown", "likely_free", FB["fallback"]["fallback_name"]))
+        self.assertEqual(r["url"], "https://www.facebook.com/kukikalabs")  # links to the profile, not the API
+        self.assertIn("public Pages", check._hints([{**r, "input": "kukikalabs"}], ["facebook"], P)[0])
+
 
 class FacebookRenderTest(unittest.TestCase):
     def res(self, inp, platform, status, reason=None):
