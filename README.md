@@ -29,7 +29,7 @@
 ![PyPI](https://img.shields.io/badge/PyPI-3775A9?style=flat-square&logo=pypi&logoColor=white)
 ![Domains](https://img.shields.io/badge/.com%20.id%20.io%20...-domains-6e7781?style=flat-square)
 
-**Works in**&nbsp; Claude Code · Codex · Cursor · Google Antigravity · Claude.ai · ChatGPT
+**Works in**&nbsp; Claude Code · Codex · Cursor · Google Antigravity · Claude.ai &nbsp;·&nbsp; ChatGPT: [brainstorm only](#chatgpt-brainstorm-only)
 
 [Name check](#why) · [Brand kit demo](#after-the-name-pick-a-style-get-the-kit) · [Gallery](#not-one-house-style) · [Install](#install) · [Use it](#use-it)
 
@@ -173,16 +173,17 @@ The [skills CLI](https://github.com/vercel-labs/skills) detects the agents you h
 
 On Claude Code older than 2.1.275, run `/plugin marketplace add M-Julius/brand-kickstart`, then `/plugin install brand-kickstart@brand-kickstart`. Plugin updates arrive through `/plugin`.
 
-### Claude.ai and ChatGPT, by upload
+### Claude.ai, by upload
 
-1. Download `brand-kickstart.zip` from the [latest release](https://github.com/M-Julius/brand-kickstart/releases/latest).
-2. Upload it:
-   - **Claude.ai**: Settings → Capabilities → Skills → Upload skill.
-   - **ChatGPT**: Skills → Create → Upload from your computer.
+Download `brand-kickstart.zip` from the [latest release](https://github.com/M-Julius/brand-kickstart/releases/latest) and upload it in Settings → Capabilities → Skills → Upload skill. The repository's own "Download ZIP" contains a lot more than the skill, so use the release zip.
 
-These apps run the scripts in a sandbox, so two limits apply:
+Claude.ai runs the scripts in a sandbox, so two limits apply:
 - **Name checks need internet access.** On Claude.ai, "package managers only" network access lets npm and PyPI through but blocks the social platforms and the domain lookup. Allow all domains for code execution in Settings. Even then, Instagram, Threads and GitHub may limit the shared sandbox IP. Anything the sandbox cannot reach shows ❓ with a link rather than a guess. Running the check on your own machine gives full results.
 - **The brand kit needs `resvg-py`.** The sandbox may not be able to install it. If so, the agent still writes the SVG files, and you can render them on your own machine with `brand.py render`.
+
+### ChatGPT: brainstorm only
+
+`brand-kickstart-chatgpt.zip` from the latest release installs as a ChatGPT plugin, but in our tests ChatGPT did not run the scripts. It brainstormed and showed web images, with no name check and no logo. For the full skill, use Codex. In ChatGPT, use it for name ideas, then run `check.py` on your own machine.
 
 ### Manual: copy or symlink
 
@@ -220,7 +221,7 @@ You can just describe what you need. The agent loads the skill when the request 
 |---|---|
 | Claude Code | `/brand-kickstart` (installed as a plugin: `/brand-kickstart:brand-kickstart`) |
 | Codex | `$brand-kickstart` |
-| Cursor, Antigravity, Claude.ai, ChatGPT | ask in plain words, e.g. "use the brand-kickstart skill" |
+| Cursor, Antigravity, Claude.ai | ask in plain words, e.g. "use the brand-kickstart skill" |
 
 Prompts to try:
 

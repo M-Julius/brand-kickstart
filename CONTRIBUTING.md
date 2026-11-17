@@ -111,4 +111,4 @@ A platform reported as `blocked` in CI is not broken. Shared CI IPs get blocked 
 
 1. Bump `version` in `.claude-plugin/plugin.json`.
 2. Run `claude plugin validate .`.
-3. Push a tag such as `v0.2.0`. The release workflow attaches `brand-kickstart.zip`, which is the file Claude.ai and ChatGPT users upload.
+3. Push a tag such as `v0.2.0`. The release workflow attaches `brand-kickstart.zip`, the file Claude.ai users upload, and `brand-kickstart-chatgpt.zip`, the same files under `skills/brand-kickstart/` for ChatGPT.
