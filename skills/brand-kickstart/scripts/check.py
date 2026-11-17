@@ -404,8 +404,23 @@ def select_platforms(platforms: dict, mode: str, only, skip) -> list:
     return [k for k in platforms if k in chosen and k not in skipped]
 
 
+def _source(key: str, platforms: dict) -> str:
+    return "domains" if key.startswith(".") else platforms[key]["check"].get("platform", key)
+
+
 def _hints(results: list, keys: list, platforms: dict) -> list:
     hints = []
+    # A sandbox that only lets package registries out (Claude.ai, ChatGPT) refuses every other site at once;
+    # that is the network, not one platform's rate limit, and waiting will not help.
+    failed = {_source(r["platform"], platforms) for r in results
+              if r.get("reason") in ("rate_limited", "blocked", "network_error")}
+    answered = {_source(r["platform"], platforms) for r in results if r["status"] != "unknown"}
+    if len(failed - answered) >= 3:
+        names = sorted(platforms[s]["name"] if s in platforms else "domain lookup" for s in failed - answered)
+        hints.append(f"{', '.join(names)} could not be reached from this network. In a sandbox (Claude.ai, "
+                     "ChatGPT) that usually means only package registries are allowed: allow all domains for "
+                     "code execution in the app settings, or run the check on your own machine.")
+        return hints
     for r in results:
         reason, key = r.get("reason") or "", r["platform"]
         if reason.startswith("held_by:"):

@@ -181,7 +181,7 @@ On Claude Code older than 2.1.275, run `/plugin marketplace add M-Julius/brand-k
    - **ChatGPT**: Skills → Create → Upload from your computer.
 
 These apps run the scripts in a sandbox, so two limits apply:
-- **Name checks need internet access.** On Claude.ai, allow network access for code execution in Settings. If the sandbox cannot reach the platforms, every check shows ❓ with a link rather than a guess.
+- **Name checks need internet access.** On Claude.ai, "package managers only" network access lets npm and PyPI through but blocks the social platforms and the domain lookup. Allow all domains for code execution in Settings. Even then, Instagram, Threads and GitHub may limit the shared sandbox IP. Anything the sandbox cannot reach shows ❓ with a link rather than a guess. Running the check on your own machine gives full results.
 - **The brand kit needs `resvg-py`.** The sandbox may not be able to install it. If so, the agent still writes the SVG files, and you can render them on your own machine with `brand.py render`.
 
 ### Manual: copy or symlink

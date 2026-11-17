@@ -99,6 +99,14 @@ class CliTest(unittest.TestCase):
         self.assertEqual(md.count("YouTube limited"), 1)
         self.assertIn("https://youtube.test/a", md)
 
+    def test_sandbox_hint_replaces_per_platform_hints(self):
+        results = [res("a", "a", k, "unknown", "blocked") for k in ("instagram", "youtube", "x")]
+        results.append(res("a", "a", "npm", "available"))
+        hints = check._hints(results, ["instagram", "youtube", "x", "npm"], P)
+        self.assertEqual(len(hints), 1)
+        self.assertIn("could not be reached from this network", hints[0])
+        self.assertNotIn("npm", hints[0])
+
     def test_markdown_order(self):
         results = [res("a", "aaa", "youtube", "taken"), res("a", "aaa", "x", "available"),
                    res("b", "bbb", "youtube", "available"), res("b", "bbb", "x", "available"),
