@@ -237,7 +237,31 @@ def check_domain(label: str, tld: str, bootstrap, fetch, whois=whois_query) -> d
             status = None
         if status:
             result.update(status=status, reason=None)
+            return result
+    # Sandboxes (Claude.ai, ChatGPT) only let HTTPS out, so port 43 fails: ask DNS over HTTPS instead.
+    status = _dns_status(domain, fetch)
+    if status == "taken":
+        result.update(status="taken", reason=None)
+    elif status:
+        result["reason"] = status
     return result
+
+
+DOH = "https://dns.google/resolve?name={}&type=NS"
+
+
+def _dns_status(domain: str, fetch) -> "str | None":
+    """'taken' when the domain has name servers; 'likely_free' on NXDOMAIN (a registered domain
+    with no name servers looks the same); None when DNS gives no answer."""
+    try:
+        data = json.loads(fetch(DOH.format(domain)).body)
+    except ValueError:
+        return None
+    if data.get("Status") == 3:
+        return "likely_free"
+    if data.get("Status") == 0 and any(a.get("type") == 2 for a in data.get("Answer", [])):
+        return "taken"
+    return None
 
 
 def _retry_wait(resp: Response) -> int:
@@ -428,6 +452,9 @@ def _hints(results: list, keys: list, platforms: dict) -> list:
             hint = (f"{platforms[key]['name']} handles come with the {holder} account. {HELD} means that {holder} "
                     f"account exists but has not turned on {platforms[key]['name']}: if it is yours, turn on "
                     f"{platforms[key]['name']} and the name is yours; if not, no one else can take it.")
+        elif reason == "likely_free" and key.startswith("."):
+            hint = (f"WHOIS for {key} could not be reached, so {LIKELY} only means no DNS record was found. "
+                    f"Open the {LIKELY} links to be sure.")
         elif reason == "likely_free":
             hint = (f"{platforms[key]['name']} can only confirm taken names: an age-restricted page looks "
                     f"the same as a free name. Open the {LIKELY} links to be sure.")

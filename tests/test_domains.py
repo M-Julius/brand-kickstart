@@ -71,7 +71,7 @@ class DomainsTest(unittest.TestCase):
         f = fake_fetch({})
         r = check.check_domain("acmestudio", "zz", {"com": "https://x/"}, f, whois=no_whois)
         self.assertEqual((r["status"], r["reason"]), ("unknown", "no_rdap"))
-        self.assertEqual(f.calls, [])
+        self.assertEqual(f.calls, [check.DOH.format("acmestudio.zz")])  # only the DNS fallback
 
     def test_bootstrap_failure(self):
         r = check.check_domain("acmestudio", "com", None, fake_fetch({}), whois=no_whois)
@@ -133,6 +133,20 @@ class WhoisTest(unittest.TestCase):
             return "No match!!"
         r = check.check_domain("acmestudio", "jp", {}, fake_fetch({}), whois=w)
         self.assertEqual(r["status"], "available")
+
+    def test_whois_unreachable_falls_back_to_dns(self):
+        def no_port_43(server, query):
+            raise OSError("blocked")
+        doh = lambda d, body: (check.DOH.format(d), check.Response(200, body, check.DOH.format(d)))  # noqa: E731
+        fetch = fake_fetch(dict([
+            doh("github.io", '{"Status":0,"Answer":[{"name":"github.io.","type":2,"data":"ns1.p16.dynect.net."}]}'),
+            doh("acmestudio.io", '{"Status":3}')]))
+        taken = check.check_domain("github", "io", {}, fetch, whois=no_port_43)
+        free = check.check_domain("acmestudio", "io", {}, fetch, whois=no_port_43)
+        self.assertEqual((taken["status"], taken["reason"]), ("taken", None))
+        self.assertEqual((free["status"], free["reason"]), ("unknown", "likely_free"))
+        hints = check._hints([{**free, "input": "acmestudio"}], [], {})
+        self.assertIn("no DNS record", hints[0])
 
     def test_whois_unclear_stays_unknown(self):
         w = fake_whois({"acmestudio.io": "Rate limit exceeded"})
