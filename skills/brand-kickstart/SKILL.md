@@ -84,6 +84,20 @@ python3 -m venv ~/.venvs/brand-kickstart && ~/.venvs/brand-kickstart/bin/pip ins
 
 After that, run `brand.py` with `~/.venvs/brand-kickstart/bin/python`.
 
+## Network access
+
+The scripts make plain HTTPS GET requests to public pages. They send only the handle or domain being checked: no cookies, no login, no user data, no telemetry. They run no shell commands.
+
+| Script | Host | Why |
+|---|---|---|
+| `check.py` | `www.instagram.com`, `www.threads.com`, `www.facebook.com`, `graph.facebook.com`, `www.tiktok.com`, `www.youtube.com`, `api.x.com`, `github.com`, `registry.npmjs.org`, `pypi.org` | Is this handle taken? Hosts are listed in `scripts/platforms.json`. |
+| `check.py` | `data.iana.org`, then the TLD registry's own RDAP server it names | Is this domain registered? |
+| `check.py` | WHOIS on TCP port 43: `whois.iana.org` and the TLD's WHOIS server | Same, for TLDs without RDAP. |
+| `check.py` | `dns.google` | Same, when port 43 is blocked. |
+| `brand.py` | `fonts.googleapis.com`, `fonts.gstatic.com` | Downloads the Google Fonts a concept uses. |
+
+Profile and `whois.com` links in the results are only for the user to click; the scripts never open them. Files are written only to the brand folder the user chooses, and to `~/.config/brand-kickstart/config.json` when the user agrees (see below; `BRAND_KICKSTART_CONFIG` overrides that path).
+
 ## Saving preferences
 
 When the user states a lasting preference ("never check X", "always check .id", "I mostly name apps"), offer to save it to `~/.config/brand-kickstart/config.json`. Create the file only if they agree. Merge with any existing content.
